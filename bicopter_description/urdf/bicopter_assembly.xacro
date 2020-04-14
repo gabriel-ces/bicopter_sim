@@ -21,14 +21,27 @@
   <!-- Included URDF Files -->
   <xacro:include filename="$(find bicopter_sim)/bicopter_description/urdf/bicopter_base.xacro" />
   
-   <!-- inertia of a single rotor, assuming it is a cuboid. Height=3mm, width=15mm -->
+   <!-- inertia of a single rotor, assuming it is a cuboid. Height=3mm, width=15mm 
   <xacro:property name="rotor_inertia">
     <inertia
     ixx="${1/12 * mass_rotor * (0.015 * 0.015 + 0.003 * 0.003) * rotor_velocity_slowdown_sim}"
     iyy="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.003 * 0.003) * rotor_velocity_slowdown_sim}"
     izz="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.015 * 0.015) * rotor_velocity_slowdown_sim}"
-    ixy="0.0" ixz="0.0"  iyz="0.0" /> <!-- [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
+    ixy="0.0" ixz="0.0"  iyz="0.0" /> 
+    
+  </xacro:property> -->
+  
+  <!-- -->
+  <xacro:property name="rotor_inertia">
+    <inertia
+    ixx="${1/12 * mass_rotor * (0.015 * 0.015 + 0.003 * 0.003)}"
+    iyy="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.003 * 0.003)}"
+    izz="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.015 * 0.015)}"
+    ixy="0.0" ixz="0.0"  iyz="0.0" /> 
+    
   </xacro:property>
+  
+  <!-- [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
   
   <xacro:bicopter_base/>
   

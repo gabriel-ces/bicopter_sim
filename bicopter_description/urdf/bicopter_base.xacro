@@ -349,7 +349,7 @@
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    
+    <!--
     <gazebo>
       <plugin name="${prefix}_motor_model" filename="librotors_gazebo_motor_model.so">
         <jointName>${prefix}_rotor_joint</jointName>
@@ -368,7 +368,7 @@
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       </plugin>
     </gazebo>
-    <!-- -->
+     -->
     <gazebo reference="${prefix}_rotor">
       <material>Gazebo/${color}</material>
     </gazebo>
