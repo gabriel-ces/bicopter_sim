@@ -1,0 +1,53 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"base_link_inertial" [label="base_link_inertial"];
+"left_leg" [label="left_leg"];
+"left_mancal" [label="left_mancal"];
+"left_tube_arm" [label="left_tube_arm"];
+"left_arm" [label="left_arm"];
+"left_tilt" [label="left_tilt"];
+"left_0_stator" [label="left_0_stator"];
+"left_arm2" [label="left_arm2"];
+"right_leg" [label="right_leg"];
+"right_mancal" [label="right_mancal"];
+"right_tube_arm" [label="right_tube_arm"];
+"right_arm" [label="right_arm"];
+"right_tilt" [label="right_tilt"];
+"right_0_stator" [label="right_0_stator"];
+"right_rotor" [label="right_rotor"];
+"right_arm2" [label="right_arm2"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "base_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"base_joint" -> "base_link_inertial"
+"base_link" -> "base_to_left_leg" [label="xyz: 0.035 0.0075 -0.0025 \nrpy: 0 -0 0"]
+"base_to_left_leg" -> "left_leg"
+"base_link" -> "base_to_left_mancal" [label="xyz: 0.07 0 0.0142 \nrpy: 0 -0 0"]
+"base_to_left_mancal" -> "left_mancal"
+"base_link" -> "base_to_left_tube_arm" [label="xyz: 0.115 0 0.0142 \nrpy: 0 -0 0"]
+"base_to_left_tube_arm" -> "left_tube_arm"
+"left_tube_arm" -> "base_to_left_arm" [label="xyz: 0.1 -0.022 0 \nrpy: 0 -0 0"]
+"base_to_left_arm" -> "left_arm"
+"left_arm" -> "arm_to_left_tilt" [label="xyz: 0 0.02 0 \nrpy: 0 -0 0"]
+"arm_to_left_tilt" -> "left_tilt"
+"left_tilt" -> "tilt_to_left_0_stator" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"tilt_to_left_0_stator" -> "left_0_stator"
+"left_tube_arm" -> "base_to_left_arm2" [label="xyz: 0.1 0.03 0 \nrpy: 0 -0 0"]
+"base_to_left_arm2" -> "left_arm2"
+"base_link" -> "base_to_right_leg" [label="xyz: -0.035 0.0075 -0.0025 \nrpy: 0 -0 0"]
+"base_to_right_leg" -> "right_leg"
+"base_link" -> "base_to_right_mancal" [label="xyz: -0.07 0 0.0142 \nrpy: 0 -0 0"]
+"base_to_right_mancal" -> "right_mancal"
+"base_link" -> "base_to_right_tube_arm" [label="xyz: -0.115 0 0.0142 \nrpy: 0 -0 0"]
+"base_to_right_tube_arm" -> "right_tube_arm"
+"right_tube_arm" -> "base_to_right_arm" [label="xyz: -0.1 0.022 0 \nrpy: 0 -0 0"]
+"base_to_right_arm" -> "right_arm"
+"right_arm" -> "arm_to_right_tilt" [label="xyz: 0 -0.02 0 \nrpy: 0 -0 0"]
+"arm_to_right_tilt" -> "right_tilt"
+"right_tilt" -> "tilt_to_right_0_stator" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"tilt_to_right_0_stator" -> "right_0_stator"
+"right_0_stator" -> "right_rotor_joint" [label="xyz: 0 0 0.033 \nrpy: 0 -0 0"]
+"right_rotor_joint" -> "right_rotor"
+"right_tube_arm" -> "base_to_right_arm2" [label="xyz: -0.1 -0.03 0 \nrpy: 0 -0 0"]
+"base_to_right_arm2" -> "right_arm2"
+}
