@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<robot name="bicopter" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Properties -->
+  <xacro:property name="rotor_velocity_slowdown_sim" value="10" />
+  <xacro:property name="mesh_scale" value="1 1 1"/>
+  <xacro:property name="mesh" value="propeller"/>  <!-- "propeller" -->
+  <xacro:property name="mesh_scale_prop" value=".12 .12 .12"/>
+  <xacro:property name="mass_rotor" value="0.005" /> <!-- [kg] -->
+  <xacro:property name="rotor_offset_top" value="0.033" /> <!-- [m] -->
+  <xacro:property name="radius_rotor" value="0.14" /> <!-- [m] -->
+  <xacro:property name="motor_constant" value="2.39e-05" /> <!-- [kg.m/s^2] -->
+  <xacro:property name="moment_constant" value="0.016" /> <!-- [m] -->
+  <xacro:property name="time_constant_up" value="0.15" /> <!-- [s] -->
+  <xacro:property name="time_constant_down" value="0.15" /> <!-- [s] -->
+  <xacro:property name="max_rot_velocity" value="770" /> <!-- [rad/s] -->
+  <xacro:property name="rotor_drag_coefficient" value="1.3858e-06" />
+  <xacro:property name="rolling_moment_coefficient" value="0.000001" />
+  <xacro:property name="color" value="DarkGrey" />
+  
+  <!-- Included URDF Files -->
+  <xacro:include filename="$(find bicopter_sim)/bicopter_description/urdf/bicopter_base.xacro" />
+  
+   <!-- inertia of a single rotor, assuming it is a cuboid. Height=3mm, width=15mm 
+  <xacro:property name="rotor_inertia">
+    <inertia
+    ixx="${1/12 * mass_rotor * (0.015 * 0.015 + 0.003 * 0.003) * rotor_velocity_slowdown_sim}"
+    iyy="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.003 * 0.003) * rotor_velocity_slowdown_sim}"
+    izz="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.015 * 0.015) * rotor_velocity_slowdown_sim}"
+    ixy="0.0" ixz="0.0"  iyz="0.0" /> 
+    
+  </xacro:property> -->
+  
+  <!-- -->
+  <xacro:property name="rotor_inertia">
+    <inertia
+    ixx="${1/12 * mass_rotor * (0.015 * 0.015 + 0.003 * 0.003)}"
+    iyy="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.003 * 0.003)}"
+    izz="${1/12 * mass_rotor * (4 * radius_rotor * radius_rotor + 0.015 * 0.015)}"
+    ixy="0.0" ixz="0.0"  iyz="0.0" /> 
+    
+  </xacro:property>
+  
+  <!-- [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
+  
+  <xacro:bicopter_base/>
+  
+   <!-- CRIACAO DOS MANCAIS E SUAS JUNTAS (JOINTS) -->
+  
+  <xacro:mancal prefix="right" reflect="-1" />
+  <xacro:mancal prefix="left" reflect="1" />
+  
+  <!-- CRIACAO DOS TUBE ARM E SUAS JUNTAS (JOINTS) -->
+  
+  <xacro:tube_arm prefix="right" reflect="-1" />
+  <xacro:tube_arm prefix="left" reflect="1" />
+  
+  <!-- CRIACAO DOS ARM E SUAS JUNTAS (JOINTS) -->
+  
+   <xacro:arm prefix="right" releve="0" reflect="-1" />
+   <xacro:arm prefix="left" releve="1" reflect="1" />
+  
+  <!-- CRIACAO DOS ARM2 E SUAS JUNTAS (JOINTS) -->
+  
+   <xacro:arm2 prefix="right" releve="0" reflect="-1" />
+   <xacro:arm2 prefix="left" releve="1" reflect="1" />
+   
+   <!-- CRIACAO DOS LEG E SUAS JUNTAS (JOINTS) -->
+  
+   <xacro:leg prefix="right" reflect="-1" />
+   <xacro:leg prefix="left" reflect="1" /> 
+   
+   <!-- CRIACAO DOS TILT E SUAS JUNTAS (JOINTS) -->
+  
+   <xacro:tilt prefix="right" reflect="-1" />
+   <xacro:tilt prefix="left" reflect="1" /> 
+   
+   <!-- CRIACAO DOS STATOR E SUAS JUNTAS (JOINTS) -->
+  
+   <xacro:stator prefix="right" reflect="-1" parent="right_tilt"/>
+   <xacro:stator prefix="left"  reflect="1" parent="left_tilt" /> 
+ 
+   <!-- CRIACAO DOS ROTORES -->
+   
+   <xacro:vertical_rotor
+    prefix="left"
+    direction="cw"
+    motor_constant="${motor_constant}"
+    moment_constant="${moment_constant}"
+    parent="left_stator"
+    mass_rotor="${mass_rotor}"
+    radius_rotor="${radius_rotor}"
+    time_constant_up="${time_constant_up}"
+    time_constant_down="${time_constant_down}"
+    max_rot_velocity="${max_rot_velocity}"
+    motor_number="0"
+    rotor_drag_coefficient="${rotor_drag_coefficient}"
+    rolling_moment_coefficient="${rolling_moment_coefficient}"
+    mesh ="propeller"
+    mesh_scale="${mesh_scale_prop}"
+    color="Blue">
+    <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
+    <xacro:insert_block name="rotor_inertia" />
+  </xacro:vertical_rotor>
+   
+   <xacro:vertical_rotor
+    prefix="right"
+    direction="ccw"
+    motor_constant="${motor_constant}"
+    moment_constant="${moment_constant}"
+    parent="right_stator"
+    mass_rotor="${mass_rotor}"
+    radius_rotor="${radius_rotor}"
+    time_constant_up="${time_constant_up}"
+    time_constant_down="${time_constant_down}"
+    max_rot_velocity="${max_rot_velocity}"
+    motor_number="0"
+    rotor_drag_coefficient="${rotor_drag_coefficient}"
+    rolling_moment_coefficient="${rolling_moment_coefficient}"
+    mesh ="propeller"
+    mesh_scale="${mesh_scale_prop}"
+    color="Blue">
+    <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
+    <xacro:insert_block name="rotor_inertia" />
+  </xacro:vertical_rotor>
+   
+	   <!-- CONECTANDO ROS TO GAZEBO -->
+    
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+     <robotNamespace>/</robotNamespace>
+	   </plugin>
+   </gazebo>
+  
+ </robot>

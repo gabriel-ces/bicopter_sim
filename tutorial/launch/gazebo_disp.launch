@@ -17,10 +17,12 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
   
-  <!-- Spawn 3DR Model -->
-   <include file="$(find bicopter_sim)/bicopter_description/launch/spawn_bicopter.launch">
-    <arg name="model" value="$(arg model)" />  
-  </include>    
+  <!-- Spawn 3DR Model --> 
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+  
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+      args="-z 0.08 -urdf -model robot -param robot_description" respawn="false" output="screen" />
+     
   
   <!-- Given the published joint states, publish tf for the robot links -->
   
@@ -30,9 +32,3 @@
 
 </launch>
 
-<!-- Spawn 3DR Model 
-  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
-  
-  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-      args="-z 0.08 -urdf -model robot -param robot_description" respawn="false" output="screen" />
-  -->    

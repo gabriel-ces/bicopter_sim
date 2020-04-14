@@ -1,0 +1,10 @@
+bicopter_joint_state_controller:
+    # The joint state controller handles publishing transforms for any moving joints
+    type: "joint_state_controller/JointStateController"
+    publish_rate: 50
+
+bicopter_tilt_controller:
+    type: "position_controllers/JointGroupPositionController"
+    joints:
+        - arm_to_right_tilt
+        - arm_to_left_tilt

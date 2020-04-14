@@ -1,0 +1,19 @@
+<launch>
+  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/bicopter_ass.xacro"/>
+  <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find bicopter_sim)/bicopter_description/rviz/urdf.rviz" />
+  <arg name="ns" default="bicopter" />
+  
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+  
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+  <!-- Visualisation RVIZ -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" output="screen"/>
+</launch>
+  
