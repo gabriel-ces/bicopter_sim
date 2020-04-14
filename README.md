@@ -36,7 +36,7 @@ Depois é necessario criar um ambiente de trabalho e para isso basta seguir esse
 
 Bom agora instalamos o git pelo terminal como aqui descrito (https://www.digitalocean.com/community/tutorials/como-instalar-o-git-no-ubuntu-18-04-pt)
 
-### Agora finalmente começamos a mecher com o que esta aqui
+### Agora finalmente começamos a tocar o que esta aqui
 
 Primeiro clonamos o que foi feito pela equipe de robotica de zurique:
 git clone git@github.com:ethz-asl/rotors_simulator.git
