@@ -17,9 +17,15 @@
 
   <!-- MACRO PARA CRIACAO DA BASE DO BICOPTER -->
   <xacro:macro name="bicopter_base">
-  
+  <!---->
   <link name="base_link">
   </link>
+  
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_link_inertial"/>
+  </joint>
+  
   
   <link name="base_link_inertial">  
   
@@ -40,11 +46,6 @@
     <xacro:default_inertial mass="0.1419" ixx="0.1942e-6" ixy="0" ixz="0" iyy="0.3362e-6" iyz="-0.0021e-6" izz="0.5259e-6"/>    
   
   </link>
-  
-  <joint name="base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_link_inertial"/>
-  </joint>
   
   <!-- attach multirotor_base_plugin to the base_link -->
   <gazebo>
@@ -225,6 +226,7 @@
       <child link="${prefix}_tilt"/>
       <origin xyz="${reflect*0.035} ${reflect*0.0075} -0.0025"/>
     </joint>
+    
     <!--
     <joint name="arm_to_${prefix}_tilt" type="fixed">
       <origin rpy="0 0 0" xyz="0 ${reflect*0.02} 0"/>
@@ -300,57 +302,6 @@
     
   </xacro:macro>
   
-  <!--XACRO DO IMU : joint , link , sensor 
-  
-  <xacro:macro name="imu_sensor" params="xyz rpy parent">
-     
-    <link name="imu_sensor_link">
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <box size="0.02 0.02 0.01"/>
-            </geometry>
-        </collision>
-        <visual>
-            <geometry>
-                <box size="0.02 0.02 0.01"/>
-            </geometry>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-             <material name="blue"/>
-        </visual>
-        <inertial>
-            <mass value="0.001" />
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <inertia ixx="0.00000015" ixy="0" ixz="0" iyy="0.00000015" iyz="0" izz="0.00000015" />
-        </inertial>
-    </link>
-    
-    <joint name="imu_sensor_joint" type="fixed">
-        <axis xyz="0 0 1" />
-        <origin xyz="${xyz}" rpy="${rpy}"/>
-        <parent link="${parent}"/>
-        <child link="imu_sensor_link"/>
-    </joint>
-    
-    <gazebo>
-        <plugin name='imu_plugin' filename='libgazebo_ros_imu.so'>
-              <always_on>1</always_on>
-              <topicName>imu_data</topicName>
-              <bodyName>imu_sensor_link</bodyName>
-              <updateRateHZ>10.0</updateRateHZ>
-              <gaussianNoise>0.0</gaussianNoise>
-              <xyzOffset>0 0 0</xyzOffset>
-              <rpyOffset>0 0 0</rpyOffset>
-        </plugin>
-    </gazebo>
-
-  </xacro:macro>
-  
-   -->
-     <!-- CRIACAO DOS IMU  
-  
-   <xacro:imu_sensor xyz="0 0.05 0" rpy="0 0 0" parent="base_link" />
-   -->
   <!--MACRO PARA CRIACAO DO ROTOR -->
   
   <xacro:macro name="vertical_rotor" params="prefix direction motor_constant moment_constant parent mass_rotor radius_rotor time_constant_up time_constant_down max_rot_velocity motor_number rotor_drag_coefficient rolling_moment_coefficient color mesh mesh_scale *origin *inertia">
@@ -362,9 +313,7 @@
       <child link="rotor_${motor_number}" />
     </joint>
     -->
-    <!-- TODO(ff): not currently set because it's not yet supported -->
-    <!-- <gazebo reference="rotor_${motor_number}_joint"> <axis> <xyz>0 0 1</xyz>
-      <limit> <velocity> ${max_rot_velocity} </velocity> </limit> </axis> </gazebo> -->
+    
     <link name="${prefix}_rotor">
       <inertial>
         <mass value="${mass_rotor}" /> <!-- [kg] -->
@@ -419,7 +368,7 @@
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       </plugin>
     </gazebo>
-    
+    <!-- -->
     <gazebo reference="${prefix}_rotor">
       <material>Gazebo/${color}</material>
     </gazebo>
@@ -427,3 +376,55 @@
     </xacro:macro>
 
  </robot>
+ 
+ <!--XACRO DO IMU : joint , link , sensor 
+  
+  <xacro:macro name="imu_sensor" params="xyz rpy parent">
+     
+    <link name="imu_sensor_link">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.02 0.02 0.01"/>
+            </geometry>
+        </collision>
+        <visual>
+            <geometry>
+                <box size="0.02 0.02 0.01"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <material name="blue"/>
+        </visual>
+        <inertial>
+            <mass value="0.001" />
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.00000015" ixy="0" ixz="0" iyy="0.00000015" iyz="0" izz="0.00000015" />
+        </inertial>
+    </link>
+    
+    <joint name="imu_sensor_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <parent link="${parent}"/>
+        <child link="imu_sensor_link"/>
+    </joint>
+    
+    <gazebo>
+        <plugin name='imu_plugin' filename='libgazebo_ros_imu.so'>
+              <always_on>1</always_on>
+              <topicName>imu_data</topicName>
+              <bodyName>imu_sensor_link</bodyName>
+              <updateRateHZ>10.0</updateRateHZ>
+              <gaussianNoise>0.0</gaussianNoise>
+              <xyzOffset>0 0 0</xyzOffset>
+              <rpyOffset>0 0 0</rpyOffset>
+        </plugin>
+    </gazebo>
+
+  </xacro:macro>
+  
+   -->
+     <!-- CRIACAO DOS IMU  
+  
+   <xacro:imu_sensor xyz="0 0.05 0" rpy="0 0 0" parent="base_link" />
+   -->

@@ -62,7 +62,7 @@
    <xacro:tilt prefix="right" reflect="-1" />
    <xacro:tilt prefix="left" reflect="1" /> 
    
-   <!-- CRIACAO DOS STATOR E SUAS JUNTAS (JOINTS) -->
+   <!-- CRIACAO DOS STATOR E SUAS JUNTAS (JOINTS)  -->
   
    <xacro:stator prefix="right" reflect="-1" parent="right_tilt"/>
    <xacro:stator prefix="left"  reflect="1" parent="left_tilt" /> 

@@ -1,6 +1,6 @@
 <launch>
   
-  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/bicopter_assembly.xacro"/>
+  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/bicopter_ass.xacro"/>
   <arg name="rvizconfig" default="$(find bicopter_sim)/bicopter_description/rviz/urdf.rviz" />
   
   <include file="$(find bicopter_sim)/bicopter_description/launch/gazebo_disp.launch">
@@ -9,5 +9,32 @@
 
   <!-- Visualisation RVIZ -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
-            
+  
+  <!-- --> 
+  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/joint.yaml"/>
+  <node name="bicopter_controller_spawner" pkg="controller_manager" type="spawner"
+      args="bicopter_joint_state_controller
+            bicopter_tilt_controller"/>
+  
+  <!-- Create node to control joint positions using joint controller -->
+  <node name="tilt_positions_node" pkg="bicopter_sim" type="tilt_publisher.py" output="screen" respawn="true" />
+
+  <!-- 
+  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/pid_gains.yaml"/>
+  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/joints.yaml"/>
+  <node name="bicopter_controller_spawner" pkg="controller_manager" type="spawner"
+      args="bicopter_joint_state_controller
+      bicopter_tilt_controller
+      bicopter_motor_controller"/>
+  -->
+  
+  
+  <!-- 
+  <node name="motor_positions_node" pkg="bicopter_sim" type="motor_publisher.py" output="screen" respawn="true" />
+  -->              
 </launch>
+
+<!-- Faz nao funcionar
+  
+  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/pid_gain.yaml"
+  ns="/gazebo_ros_control"/> -->
