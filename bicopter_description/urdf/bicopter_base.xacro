@@ -306,13 +306,13 @@
   
   <xacro:macro name="vertical_rotor" params="prefix direction motor_constant moment_constant parent mass_rotor radius_rotor time_constant_up time_constant_down max_rot_velocity motor_number rotor_drag_coefficient rolling_moment_coefficient color mesh mesh_scale *origin *inertia">
    
-    <!--
-    <joint name="rotor_${motor_number}_joint" type="fixed">
+    <!-- -->
+    <joint name="${prefix}_rotor_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
-      <child link="rotor_${motor_number}" />
+      <child link="${prefix}_rotor" />
     </joint>
-    -->
+    
     
     <link name="${prefix}_rotor">
       <inertial>
@@ -331,7 +331,7 @@
       </collision>
     </link>
     
-     <!-- Rotor joint and link  -->
+     <!-- Rotor joint and link  
     <joint name="${prefix}_rotor_joint" type="continuous">
       <xacro:insert_block name="origin" />
       <axis xyz="0 0 1" />
@@ -349,6 +349,7 @@
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
     </transmission>
+    -->
     <!--
     <gazebo>
       <plugin name="${prefix}_motor_model" filename="librotors_gazebo_motor_model.so">

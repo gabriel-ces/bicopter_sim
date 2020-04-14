@@ -29,10 +29,10 @@ def tilt_joint_positions_publisher():
 	while not rospy.is_shutdown():
 		
 		#Have each joint follow a sine movement of sin(i/100).
-		msg.data = [0.00,0.00]
+		#msg.data = [0.00,0.00]
 		
-		#Have each joint follow a sine movement of sin(i/100).
-		#msg.data = [(math.pi/2)*abs(sin(i/500.)),(math.pi/2)*abs(sin(i/500.))]
+		#Have each joint follow a sine movement of sin((math.pi/4.3) esse angulo é o maximo antes de bater a helice no chao.
+		msg.data = [(math.pi/4.3)*abs(sin(i/500.)),(math.pi/4.3)*abs(sin(i/500.))]
 
 		#Publish the same sine movement to each joint.
 		pub.publish(msg)
