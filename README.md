@@ -39,12 +39,15 @@ Bom agora instalamos o git pelo terminal como aqui descrito (https://www.digital
 ### Agora finalmente começamos a tocar o que esta aqui
 
 Primeiro clonamos o que foi feito pela equipe de robotica de zurique:
-git clone git@github.com:ethz-asl/rotors_simulator.git
-git clone git@github.com:ethz-asl/mav_comm.git
-
+```
+   $ git clone git@github.com:ethz-asl/rotors_simulator.git
+   $ git clone git@github.com:ethz-asl/mav_comm.git
+   
+```
 depois o que foi feito aqui:
-git clone https://github.com/g-cobot/bicopter_sim.git
-
+```
+   $ git clone https://github.com/g-cobot/bicopter_sim.git
+```
 to be continue...
 
 
