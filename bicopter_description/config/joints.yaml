@@ -8,8 +8,3 @@ bicopter_tilt_controller:
     joints:
         - arm_to_right_tilt
         - arm_to_left_tilt
-bicopter_motor_controller:
-    type: "position_controllers/JointGroupPositionController"
-    joints:
-        - left_rotor_joint
-        - right_rotor_joint

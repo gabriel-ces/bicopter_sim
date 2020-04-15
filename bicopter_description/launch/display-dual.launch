@@ -1,9 +1,9 @@
 <launch>
   
-  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/bicopter_ass.xacro"/>
+  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/assembly_plus.xacro"/>
   <arg name="rvizconfig" default="$(find bicopter_sim)/bicopter_description/rviz/urdf.rviz" />
   
-  <include file="$(find bicopter_sim)/bicopter_description/launch/gazebo_disp.launch">
+  <include file="$(find bicopter_sim)/bicopter_description/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
   </include>
 
@@ -11,7 +11,7 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
   
   <!-- --> 
-  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/joint.yaml"/>
+  <rosparam command="load" file="$(find bicopter_sim)/bicopter_description/config/joints.yaml"/>
   <node name="bicopter_controller_spawner" pkg="controller_manager" type="spawner"
       args="bicopter_joint_state_controller
             bicopter_tilt_controller"/>

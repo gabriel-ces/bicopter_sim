@@ -1,5 +1,5 @@
 <launch>
-  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/bicopter_ass.xacro"/>
+  <arg name="model" default="$(find bicopter_sim)/bicopter_description/urdf/assembly.xacro"/>
   <arg name="gui" default="true" />
   <arg name="rvizconfig" default="$(find bicopter_sim)/bicopter_description/rviz/urdf.rviz" />
   <arg name="ns" default="bicopter" />
